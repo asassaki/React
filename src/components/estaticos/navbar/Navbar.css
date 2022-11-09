@@ -6,3 +6,7 @@
 .text-decorator-none {
     text-decoration: none;
 }
+
+.color{
+    background-color: #364b4d !important;
+}

@@ -7,7 +7,7 @@ import './Navbar.css'
 function Navbar() {
     return (
         <>
-            <AppBar position="static">
+            <AppBar className="color" position="static">
                 <Toolbar variant="dense">
                     <Box className='cursor'>
                         <Typography variant="h5" color="inherit">
