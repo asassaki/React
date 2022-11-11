@@ -13,4 +13,9 @@
 
 .btnCancelar {
     margin-right: 20px !important;
+    background-color: #aa3939 !important;
+}
+
+.btnCadastrar {
+    background-color: #4d924d;
 }

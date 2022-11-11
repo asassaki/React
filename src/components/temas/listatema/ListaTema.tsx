@@ -4,17 +4,30 @@ import { Card, CardActions, CardContent, Button, Typography } from '@material-ui
 import Tema from '../../../models/Tema';
 import { Box } from "@mui/material";
 import './ListaTema.css';
-import useLocalStorage from 'react-use-localstorage';
 import { busca } from '../../../services/Service';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/TokensReducers';
+import { toast } from 'react-toastify';
 
 function ListaTema() {
     const [temas, setTemas] = useState<Tema[]>([])
-    const [token, setToken] = useLocalStorage('token');
     let history = useNavigate();
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    );
 
     useEffect(()=>{
         if(token == ''){
-            alert("Você deve estar logado")
+            toast.error('Você deve estar logado', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
             history("/login")
         }
     }, [token])
@@ -50,14 +63,14 @@ function ListaTema() {
 
                             <Link to={`/formularioTema/${tema.id}`} className="text-decorator-none">
                                 <Box mx={1}>
-                                    <Button variant="contained" className="marginLeft" size='small' color="primary" >
+                                    <Button variant="contained" className="marginLeft, btnAtualizar" size='small' color="primary" >
                                         atualizar
                                     </Button>
                                 </Box>
                             </Link>
                             <Link to={`/deletarTema/${tema.id}`} className="text-decorator-none">
                                 <Box mx={1}>
-                                    <Button variant="contained" size='small' color="secondary">
+                                    <Button variant="contained" className="btnCancelar" size='small' color="secondary">
                                         deletar
                                     </Button>
                                 </Box>

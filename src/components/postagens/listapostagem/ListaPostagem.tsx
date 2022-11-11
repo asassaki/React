@@ -4,17 +4,30 @@ import { Card, CardActions, CardContent, Button, Typography } from '@material-ui
 import Postagem from '../../../models/Postagem'
 import { Box } from "@mui/material";
 import './ListaPostagem.css';
-import useLocalStorage from 'react-use-localstorage';
 import { busca } from '../../../services/Service';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/TokensReducers';
+import { toast } from 'react-toastify';
 
 function ListaPostagem() {
     const [posts, setPosts] = useState<Postagem[]>([])
-    const [token, setToken] = useLocalStorage('token');
     let history = useNavigate();
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    );
 
     useEffect(()=>{
         if(token == ''){
-            alert("Você precisa estar logado")
+            toast.error('Você deve estar logado', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
             history("/login")
         }
     }, [token])
@@ -55,14 +68,14 @@ function ListaPostagem() {
                         <Box display="flex" justifyContent="center" mb={1.5}>
                             <Link to={`/formularioPostagem/${post.id}`} className="text-decorator-none" >
                                 <Box mx={1}>
-                                    <Button variant="contained" className="marginLeft" size='small' color="primary" >
+                                    <Button variant="contained" className="marginLeft, btnAtualizar" size='small' color="primary" >
                                         atualizar
                                     </Button>
                                 </Box>
                             </Link>
                             <Link to={`/deletarPostagem/${post.id}`}  className="text-decorator-none">
                                 <Box mx={1}>
-                                    <Button variant="contained" size='small' color="secondary">
+                                    <Button variant="contained" className="btnCancelar  " size='small' color="secondary">
                                         deletar
                                     </Button>
                                 </Box>
