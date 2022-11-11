@@ -29,6 +29,7 @@ function CadastroUsuario() {
   useEffect(() => {
     if (userResult.id != 0) {
       history("/login")
+      console.log(userResult)
     }
   }, [userResult])
 
